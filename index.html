@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract of Agreement to Code of Conduct</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        p {
+            margin: 10px 0;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .input-field {
+            display: block;
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 100%;
+            max-width: 500px;
+        }
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .signature-section div {
+            width: 48%;
+        }
+        .sign-line {
+            border-bottom: 1px solid #000;
+            margin-top: 20px;
+            padding-bottom: 5px;
+        }
+        .save-pdf-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contract of Agreement to Code of Conduct</h1>
+    <div class="section">
+        <h2>Between</h2>
+        <p>RAH REAL ESTATE DEVELOPMENT COMPANY INTERNATIONAL LIMITED</p>
+        <p>AND</p>
+        <p><input type="text" class="input-field" id="employeeName" placeholder="Employee Name"></p>
+    </div>
+    <div class="section">
+        <p>This contract is made and entered into on this <input type="text" class="input-field" id="day" placeholder="Day"> day of <input type="text" class="input-field" id="month" placeholder="Month">, 20<input type="text" class="input-field" id="year" placeholder="Year">, by and between RAH REAL ESTATE DEVELOPMENT COMPANY INTERNATIONAL LIMITED, hereinafter referred to as "the Company"</p>
+        <p>And</p>
+        <p><input type="text" class="input-field" id="employeeName2" placeholder="Employee Name">, hereinafter referred to as "the Employee".</p>
+    </div>
+    <div class="section">
+        <h2>Code of Conduct Acknowledgment</h2>
+        <p>The Employee hereby acknowledges that they have received, read, and fully understood the Company's Code of Conduct, which outlines the expectations, responsibilities, and behavioural standards for all employees.</p>
+    </div>
+    <div class="section">
+        <h2>Commitment to Compliance</h2>
+        <p>The Employee agrees to comply with all the policies, procedures, and standards set forth in the Code of Conduct. The Employee understands that adherence to these guidelines is a condition of their employment with the Company.</p>
+    </div>
+    <div class="section">
+        <h2>Consequences of Non-Compliance</h2>
+        <p>The Employee acknowledges that any violation of the Code of Conduct may result in disciplinary action, which could include, but is not limited to, a warning, suspension, or termination of employment.</p>
+    </div>
+    <div class="section">
+        <h2>Amendments to the Code of Conduct</h2>
+        <p>The Employee understands that the Company reserves the right to amend, update, or modify the Code of Conduct at any time. The Employee agrees to stay informed of any changes and continue to abide by the updated policies.</p>
+    </div>
+    <div class="section">
+        <h2>Declaration of Understanding</h2>
+        <p>By signing this contract, the Employee declares that they have read, understood, and agreed to follow the Company’s Code of Conduct. The Employee acknowledges that failure to adhere to the Code of Conduct may lead to disciplinary measures, up to and including termination of employment.</p>
+    </div>
+    <div class="section">
+        <h2>Acceptance of Terms</h2>
+        <p>The Employee confirms acceptance of the terms and conditions outlined in this contract by signing below.</p>
+    </div>
+    <div class="signature-section">
+        <div>
+            <p>________________________________________</p>
+            <p>Employee Name: <input type="text" class="input-field" id="employeeName3" placeholder="Employee Name"></p>
+            <p>Employee Signature: <input type="text" class="input-field" id="employeeSignature" placeholder="Employee Signature"></p>
+            <p>Date: <input type="text" class="input-field" id="employeeDate" placeholder="Date"></p>
+        </div>
+        <div>
+            <p>For the Company:</p>
+            <p>Human Resources Manager: <input type="text" class="input-field" id="hrManagerName" placeholder="HR Manager Name"></p>
+            <p>Signature: <input type="text" class="input-field" id="hrSignature" placeholder="HR Signature"></p>
+            <p>Date: <input type="text" class="input-field" id="hrDate" placeholder="Date"></p>
+        </div>
+    </div>
+    <div class="save-pdf-button">
+        <button onclick="generatePDF()">Save as PDF</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script>
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFont("times");
+
+            const titleFontSize = 20;
+            const subtitleFontSize = 16;
+            const textFontSize = 12;
+            const lineHeight = 6.5;
+            const marginLeft = 10;
+            let startY = 20;
+            const pageHeight = doc.internal.pageSize.height;
+
+            function addText(text, fontSize = textFontSize) {
+                doc.setFontSize(fontSize);
+                const textWidth = doc.getStringUnitWidth(text) * fontSize / doc.internal.scaleFactor;
+                const remainingText = doc.splitTextToSize(text, doc.internal.pageSize.width - 2 * marginLeft);
+                if (startY + (remainingText.length + 1) * lineHeight > pageHeight) {
+                    doc.addPage();
+                    startY = 20;
+                }
+                doc.text(remainingText, marginLeft, startY);
+                startY += (remainingText.length + 1) * lineHeight;
+            }
+
+            function addCenteredText(text, fontSize = textFontSize) {
+                doc.setFontSize(fontSize);
+                const textWidth = doc.getStringUnitWidth(text) * fontSize / doc.internal.scaleFactor;
+                const x = (doc.internal.pageSize.width - textWidth) / 2;
+                const marginBottom = 12;
+                doc.text(text, x, startY);
+                startY += (fontSize * 1) + marginBottom;
+            }
+
+            // Add content to PDF
+            addCenteredText("CONTRACT OF AGREEMENT TO CODE OF CONDUCT", titleFontSize);
+
+            addCenteredText("BETWEEN", subtitleFontSize);
+
+            addCenteredText("RAH REAL ESTATE DEVELOPMENT", subtitleFontSize);
+            addCenteredText("COMPANY INTERNATIONAL LIMITED", subtitleFontSize);
+
+            addCenteredText("AND", subtitleFontSize);
+
+            addCenteredText(document.getElementById('employeeName').value, subtitleFontSize);
+
+            addText(`This contract is made and entered into on this ${document.getElementById('day').value} day of ${document.getElementById('month').value}, 20${document.getElementById('year').value}, by and between RAH REAL ESTATE DEVELOPMENT COMPANY INTERNATIONAL LIMITED, hereinafter referred to as "the Company"`, textFontSize);
+            addText("And", textFontSize);
+            addText(`${document.getElementById('employeeName2').value}, hereinafter referred to as "the Employee".`, textFontSize);
+
+            addText("Code of Conduct Acknowledgment", subtitleFontSize);
+            addText("The Employee hereby acknowledges that they have received, read, and fully understood the Company's Code of Conduct, which outlines the expectations, responsibilities, and behavioural standards for all employees.", textFontSize);
+
+            addText("Commitment to Compliance", subtitleFontSize);
+            addText("The Employee agrees to comply with all the policies, procedures, and standards set forth in the Code of Conduct. The Employee understands that adherence to these guidelines is a condition of their employment with the Company.", textFontSize);
+
+            addText("Consequences of Non-Compliance", subtitleFontSize);
+            addText("The Employee acknowledges that any violation of the Code of Conduct may result in disciplinary action, which could include, but is not limited to, a warning, suspension, or termination of employment.", textFontSize);
+
+            addText("Amendments to the Code of Conduct", subtitleFontSize);
+            addText("The Employee understands that the Company reserves the right to amend, update, or modify the Code of Conduct at any time. The Employee agrees to stay informed of any changes and continue to abide by the updated policies.", textFontSize);
+
+            addText("Declaration of Understanding", subtitleFontSize);
+            addText("By signing this contract, the Employee declares that they have read, understood, and agreed to follow the Company’s Code of Conduct. The Employee acknowledges that failure to adhere to the Code of Conduct may lead to disciplinary measures, up to and including termination of employment.", textFontSize);
+
+            addText("Acceptance of Terms", subtitleFontSize);
+            addText("The Employee confirms acceptance of the terms and conditions outlined in this contract by signing below.", textFontSize);
+
+            addText("________________________________________", textFontSize);
+            addText(`Employee Name: ${document.getElementById('employeeName3').value}`, textFontSize);
+            addText(`Employee Signature: ${document.getElementById('employeeSignature').value}`, textFontSize);
+            addText(`Date: ${document.getElementById('employeeDate').value}`, textFontSize);
+
+            addText("For the Company:", subtitleFontSize);
+            addText(`Human Resources Manager: ${document.getElementById('hrManagerName').value}`, textFontSize);
+            addText(`Signature: ${document.getElementById('hrSignature').value}`, textFontSize);
+            addText(`Date: ${document.getElementById('hrDate').value}`, textFontSize);
+
+            doc.save('Contract_of_Agreement_to_Code_of_Conduct.pdf');
+        }
+    </script>
+</body>
+</html>
